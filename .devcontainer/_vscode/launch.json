@@ -10,6 +10,7 @@
         "runserver",
         "0.0.0.0:8001"
       ],
+      "django": true,
       "justMyCode": false,
       "cwd": "${workspaceFolder}"
     },
