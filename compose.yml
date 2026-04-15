@@ -57,7 +57,8 @@ services:
     << : *default-common-django
     container_name: celery4${COMPOSE_PROJECT_NAME}
     depends_on:
-      - django
+      django:
+        condition: service_healthy
     environment:
       - DJANGO_SETTINGS_MODULE=geonode.settings_override
       - IS_CELERY=True
