@@ -23,6 +23,7 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
+				"python.defaultInterpreterPath": "/usr/src/venv/bin/python",
 				"terminal.integrated.profiles.linux": {
 					"/bin/bash": {
 						"path": "/bin/bash",
