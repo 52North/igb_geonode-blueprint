@@ -1,4 +1,4 @@
-ARG BASE_IMAGE_VERSION
+ARG BASE_IMAGE_VERSION="2.27.5-latest"
 FROM geonode/geoserver:${BASE_IMAGE_VERSION}
 
 ## GeoServer plugins

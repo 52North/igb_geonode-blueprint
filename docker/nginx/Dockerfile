@@ -1,4 +1,4 @@
-ARG BASE_IMAGE_VERSION
+ARG BASE_IMAGE_VERSION="1.28.0-v1"
 FROM geonode/nginx:${BASE_IMAGE_VERSION}
 
 ENV STATIC_ROOT=/mnt/volumes/statics/static/

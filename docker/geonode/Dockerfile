@@ -1,4 +1,4 @@
-ARG BASE_IMAGE_VERSION
+ARG BASE_IMAGE_VERSION="5.0.1"
 FROM geonode/geonode:${BASE_IMAGE_VERSION}
 
 COPY ./requirements.txt /usr/src/more_requirements.txt
