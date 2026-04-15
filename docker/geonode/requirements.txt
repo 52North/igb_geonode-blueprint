@@ -1,1 +1,6 @@
--e git+https://github.com/geosolutions-it/geonode-subsites@main#egg=geonode-subsites
+#
+# Disabled because it's not working with v5
+#
+# Waiting for https://github.com/geosolutions-it/geonode-subsites/issues/47
+#
+#-e git+https://github.com/geosolutions-it/geonode-subsites@main#egg=geonode-subsites

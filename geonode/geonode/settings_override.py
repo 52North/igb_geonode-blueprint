@@ -138,15 +138,26 @@ LOGGING = {
 INSTALLED_APPS += (
     "externalapplications",
     "customizations",
-    "subsites",
+    #
+    # Disabled because it's not working with v5
+    #
+    # Waiting for https://github.com/geosolutions-it/geonode-subsites/issues/47
+    #
+    #"subsites",
 )
 
-
+#
+# Disabled because it's not working with v5
+#
+# Waiting for https://github.com/geosolutions-it/geonode-subsites/issues/47
+#
 # SUBSITE SPECIFIC CONFIGURATION
-ENABLE_SUBSITE_CUSTOM_THEMES = True
-ENABLE_CATALOG_HOME_REDIRECTS_TO = False
-SUBSITE_READ_ONLY = False # return download_resourcebase and view resourcebase as permissions
-SUBSITE_HIDE_EXCLUSIVE_FROM_SPECIFIC_API = True # If TRUE will hide the `subsite_exclusive` resources also from the detailed endpoint `/documents`, `/maps`, `/datasets`, '/geoapps`
+#ENABLE_SUBSITE_CUSTOM_THEMES = True
+#ENABLE_CATALOG_HOME_REDIRECTS_TO = False
+# return download_resourcebase and view resourcebase as permissions
+#SUBSITE_READ_ONLY = False
+# If TRUE will hide the `subsite_exclusive` resources also from the detailed endpoint `/documents`, `/maps`, `/datasets`, '/geoapps`
+#SUBSITE_HIDE_EXCLUSIVE_FROM_SPECIFIC_API = True
 
 #
 #   Remove, if https://github.com/GeoNode/geonode/pull/14143 is merged
