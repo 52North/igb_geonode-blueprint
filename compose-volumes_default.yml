@@ -13,5 +13,5 @@ volumes:
     name: ${COMPOSE_PROJECT_NAME}-data
   tmp:
     name: ${COMPOSE_PROJECT_NAME}-tmp
-  rabbitmq:
-    name: ${COMPOSE_PROJECT_NAME}-rabbitmq
+  redis-data:
+    name: ${COMPOSE_PROJECT_NAME}-redis-data

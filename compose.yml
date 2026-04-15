@@ -170,14 +170,17 @@ services:
       start_period: 30s
 
   # Vanilla RabbitMQ service. This is needed by celery
-  rabbitmq:
-    image: rabbitmq:3-alpine
-    container_name: rabbitmq4${COMPOSE_PROJECT_NAME}
+  redis:
+    image: redis:${REDIS_BASE_IMAGE_VERSION}
+    container_name: redis4${COMPOSE_PROJECT_NAME}
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      - REDISCLI_AUTH=${REDIS_PASSWORD}
     volumes:
-      - rabbitmq:/var/lib/rabbitmq
+      - redis-data:/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
+      test: ["CMD-SHELL", "redis-cli | grep PONG"]
       interval: 30s
       timeout: 10s
       retries: 3
