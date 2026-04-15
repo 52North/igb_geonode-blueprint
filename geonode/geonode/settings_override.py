@@ -13,8 +13,9 @@ import sys
 from geonode.settings import *  # noqa
 from geonode.settings import (  # noqa
     DEBUG,
-    TEMPLATES,
     INSTALLED_APPS,
+    SITEURL,
+    TEMPLATES,
 )
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
@@ -158,6 +159,9 @@ INSTALLED_APPS += (
 #SUBSITE_READ_ONLY = False
 # If TRUE will hide the `subsite_exclusive` resources also from the detailed endpoint `/documents`, `/maps`, `/datasets`, '/geoapps`
 #SUBSITE_HIDE_EXCLUSIVE_FROM_SPECIFIC_API = True
+
+if SITEURL.startswith("https"):
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 #
 #   Remove, if https://github.com/GeoNode/geonode/pull/14143 is merged
