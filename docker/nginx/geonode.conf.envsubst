@@ -103,7 +103,7 @@ location / {
   add_header Access-Control-Allow-Credentials false;
   add_header Access-Control-Allow-Headers "Content-Type, Accept, Authorization, Origin, User-Agent";
   add_header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, OPTIONS";
-  
+
   proxy_redirect              off;
   proxy_set_header            Host $http_host;
   proxy_set_header            Origin $http_origin;

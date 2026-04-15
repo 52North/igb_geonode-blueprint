@@ -11,7 +11,7 @@
         "0.0.0.0:8001"
       ],
       "justMyCode": false,
-      "cwd": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}"
     },
     {
       "name": "Python: Celery",
@@ -35,7 +35,7 @@
       ],
       "django": true,
       "justMyCode": false,
-      "cwd": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}"
     },
     {
       "name": "Django Test",
@@ -45,7 +45,7 @@
       "args": [
         "test",
         "--keepdb",
-        "--settings=geonode.settings_override",
+        "--settings=geonode.settings_override"
       ],
       "justMyCode": false,
       "cwd": "${workspaceFolder}",
