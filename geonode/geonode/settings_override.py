@@ -147,3 +147,10 @@ ENABLE_SUBSITE_CUSTOM_THEMES = True
 ENABLE_CATALOG_HOME_REDIRECTS_TO = False
 SUBSITE_READ_ONLY = False # return download_resourcebase and view resourcebase as permissions
 SUBSITE_HIDE_EXCLUSIVE_FROM_SPECIFIC_API = True # If TRUE will hide the `subsite_exclusive` resources also from the detailed endpoint `/documents`, `/maps`, `/datasets`, '/geoapps`
+
+#
+#   Remove, if https://github.com/GeoNode/geonode/pull/14143 is merged
+#
+# 100 MB
+DEFAULT_MAX_UPLOAD_SIZE =  int(os.getenv("DEFAULT_MAX_UPLOAD_SIZE") or 100 * 1024 * 1024)
+DEFAULT_MAX_PARALLEL_UPLOADS_PER_USER = int(os.getenv("DEFAULT_MAX_PARALLEL_UPLOADS_PER_USER") or 4)
