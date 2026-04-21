@@ -161,6 +161,11 @@ INSTALLED_APPS += (
 #SUBSITE_HIDE_EXCLUSIVE_FROM_SPECIFIC_API = True
 
 #
+# App "externalapplications"
+#
+EXTERNAL_APPLICATION_MENU_FILTER_AUTOCREATE = os.getenv('EXTERNAL_APPLICATION_MENU_FILTER_AUTOCREATE ', False)
+
+#
 #   Application proxy terminating SSL
 #
 if SITEURL.startswith("https"):
