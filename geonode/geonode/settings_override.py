@@ -148,7 +148,7 @@ INSTALLED_APPS += (
 )
 
 #
-# Disabled because it's not working with v5
+# App "subsites" is disabled because it's not working with v5
 #
 # Waiting for https://github.com/geosolutions-it/geonode-subsites/issues/47
 #
@@ -160,6 +160,9 @@ INSTALLED_APPS += (
 # If TRUE will hide the `subsite_exclusive` resources also from the detailed endpoint `/documents`, `/maps`, `/datasets`, '/geoapps`
 #SUBSITE_HIDE_EXCLUSIVE_FROM_SPECIFIC_API = True
 
+#
+#   Application proxy terminating SSL
+#
 if SITEURL.startswith("https"):
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
