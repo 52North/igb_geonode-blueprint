@@ -65,11 +65,7 @@
 
 	// Uncomment the next line to run commands after the container is started - for example installing curl.
 	// "postStartCommand": "apt-get update && apt-get install -y curl",
-	"postStartCommand": [
-		"bash",
-		"-c",
-		"/usr/src/geonode/entrypoint.sh"
-	]
+	"postStartCommand": "echo Apply migrations via /usr/src/geonode$ ./entrypoint.sh"
 
 	// Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
 	// "remoteUser": "vscode"
