@@ -10,7 +10,7 @@ x-common-django:
     dockerfile: Dockerfile
     args:
       - BASE_IMAGE_VERSION=${GEONODE_BASE_IMAGE_VERSION}
-  restart: always
+  restart: unless-stopped
   env_file:
     - .env
   volumes:
