@@ -3,6 +3,8 @@ services:
     env_file:
       - .devcontainer/.env.local
     restart: "no"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./.devcontainer/_gitignore:/usr/src/geonode/.gitignore
       - ./.devcontainer/_vscode:/usr/src/geonode/.vscode
@@ -16,6 +18,8 @@ services:
     env_file:
       - .devcontainer/.env.local
     restart: "no"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - django
     # volumes:
