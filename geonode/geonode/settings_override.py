@@ -177,3 +177,84 @@ if SITEURL.startswith("https"):
 # 100 MB
 DEFAULT_MAX_UPLOAD_SIZE =  int(os.getenv("DEFAULT_MAX_UPLOAD_SIZE") or 100 * 1024 * 1024)
 DEFAULT_MAX_PARALLEL_UPLOADS_PER_USER = int(os.getenv("DEFAULT_MAX_PARALLEL_UPLOADS_PER_USER") or 4)
+
+if os.getenv("LDAP_ENABLED", "false").lower() == "true":
+    #
+    #   LDAP - https://github.com/GeoNode/geonode-contribs/tree/master/ldap
+    #
+    # ruff: disable[E402]
+    from django_auth_ldap import config as ldap_config
+    from geonode_ldap.config import GeonodeNestedGroupOfNamesType
+    import ldap
+    import json
+    # ruff: enable[E402]
+
+    # add geonode.contrib.ldap auth
+    AUTHENTICATION_BACKENDS += (  # noqa: F405
+        "geonode_ldap.backend.GeonodeLdapBackend",
+    )
+
+    def require_env(env_var_name):
+        value = os.getenv(env_var_name)
+        if not value:
+            sys.stderr.write(f"CRITICAL CONFIG ERROR: Environment variable '{env_var_name}' is not configured!\n")
+            sys.exit(1)
+        return value
+
+    # django_auth_ldap configuration
+    AUTH_LDAP_SERVER_URI =require_env("LDAP_SERVER_URL")
+    AUTH_LDAP_BIND_DN = require_env("LDAP_BIND_DN")
+    AUTH_LDAP_BIND_PASSWORD = require_env("LDAP_BIND_PASSWORD")
+
+    LDAP_USER_SEARCH_DN = require_env("LDAP_USER_SEARCH_DN")
+    LDAP_USER_SEARCH_FILTERSTR = require_env("LDAP_USER_SEARCH_FILTERSTR")
+
+    AUTH_LDAP_USER_SEARCH = ldap_config.LDAPSearch(
+        LDAP_USER_SEARCH_DN,
+        ldap.SCOPE_SUBTREE,
+        LDAP_USER_SEARCH_FILTERSTR
+    )
+
+    ldap_user_attr_map_json = require_env("LDAP_USER_ATTR_MAP_JSON")
+    try:
+        AUTH_LDAP_USER_ATTR_MAP = json.loads(ldap_user_attr_map_json)
+    except json.JSONDecodeError:
+        sys.stderr.write(f"CRITICAL CONFIG ERROR: Environment variable 'LDAP_USER_ATTR_MAP_JSON' is not valid JSON!\n")
+        sys.exit(1)
+
+    ldap_always_update_user = require_env("LDAP_ALWAYS_UPDATE_USER")
+    AUTH_LDAP_ALWAYS_UPDATE_USER = ldap_always_update_user.lower() == "true"
+
+    try:
+        AUTH_LDAP_CACHE_TIMEOUT = int(os.getenv("LDAP_CACHE_TIMEOUT", "3600"))
+    except ValueError:
+        sys.stderr.write(f"CRITICAL CONFIG ERROR: Environment variable 'LDAP_CACHE_TIMEOUT' is not valid integer!\n")
+        sys.exit(1)
+
+    auth_ldap_mirror_groups = require_env("LDAP_MIRROR_GROUPS")
+    AUTH_LDAP_MIRROR_GROUPS = auth_ldap_mirror_groups.lower() == "true"
+
+    if AUTH_LDAP_MIRROR_GROUPS:
+        logger.debug("LDAP group features activated")
+
+        LDAP_GROUP_SEARCH_DN = require_env("LDAP_GROUP_SEARCH_DN")
+        AUTH_LDAP_GROUP_SEARCH = ldap_config.LDAPSearch(
+            LDAP_GROUP_SEARCH_DN,
+            ldap.SCOPE_SUBTREE,
+        )
+
+        AUTH_LDAP_GROUP_TYPE = GeonodeNestedGroupOfNamesType()
+
+        ldap_mirror_groups_except = require_env("LDAP_MIRROR_GROUPS_EXCEPT")
+        AUTH_LDAP_MIRROR_GROUPS_EXCEPT = [x.strip() for x in ldap_mirror_groups_except.split(",") if x.strip()]
+
+        auth_ldap_find_group_perms = require_env("LDAP_FIND_GROUP_PERMS")
+        AUTH_LDAP_FIND_GROUP_PERMS = auth_ldap_find_group_perms.lower() == "true"
+
+        # geonode.contrib.ldap configuration
+        GEONODE_LDAP_GROUP_NAME_ATTRIBUTE = require_env("LDAP_GROUP_NAME_ATTRIBUTE")
+        GEONODE_LDAP_GROUP_PROFILE_FILTERSTR = require_env("LDAP_GROUP_PROFILE_FILTERSTR")
+        GEONODE_LDAP_GROUP_PROFILE_MEMBER_ATTR = require_env("LDAP_GROUP_PROFILE_MEMBER_ATTR")
+    else:
+        logger.debug("LDAP group features NOT activated")
+        AUTH_LDAP_MIRROR_GROUPS_EXCEPT = []
