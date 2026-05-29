@@ -235,7 +235,7 @@ if os.getenv("LDAP_ENABLED", "false").lower() == "true":
     AUTH_LDAP_MIRROR_GROUPS = auth_ldap_mirror_groups.lower() == "true"
 
     if AUTH_LDAP_MIRROR_GROUPS:
-        logger.debug("LDAP group features activated")
+        print("LDAP group features activated")
 
         LDAP_GROUP_SEARCH_DN = require_env("LDAP_GROUP_SEARCH_DN")
         AUTH_LDAP_GROUP_SEARCH = ldap_config.LDAPSearch(
@@ -256,5 +256,5 @@ if os.getenv("LDAP_ENABLED", "false").lower() == "true":
         GEONODE_LDAP_GROUP_PROFILE_FILTERSTR = require_env("LDAP_GROUP_PROFILE_FILTERSTR")
         GEONODE_LDAP_GROUP_PROFILE_MEMBER_ATTR = require_env("LDAP_GROUP_PROFILE_MEMBER_ATTR")
     else:
-        logger.debug("LDAP group features NOT activated")
+        print("LDAP group features NOT activated")
         AUTH_LDAP_MIRROR_GROUPS_EXCEPT = []
