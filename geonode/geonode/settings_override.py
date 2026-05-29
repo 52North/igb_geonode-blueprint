@@ -215,9 +215,9 @@ if os.getenv("LDAP_ENABLED", "false").lower() == "true":
         LDAP_USER_SEARCH_FILTERSTR
     )
 
-    ldap_user_attr_map_json = require_env("LDAP_USER_ATTR_MAP_JSON")
+    ldap_user_flags_by_group = require_env("LDAP_USER_ATTR_MAP_JSON")
     try:
-        AUTH_LDAP_USER_ATTR_MAP = json.loads(ldap_user_attr_map_json)
+        AUTH_LDAP_USER_ATTR_MAP = json.loads(ldap_user_flags_by_group)
     except json.JSONDecodeError:
         sys.stderr.write("CRITICAL CONFIG ERROR: Environment variable 'LDAP_USER_ATTR_MAP_JSON' is not valid JSON!\n")
         sys.exit(1)
@@ -242,8 +242,13 @@ if os.getenv("LDAP_ENABLED", "false").lower() == "true":
             LDAP_GROUP_SEARCH_DN,
             ldap.SCOPE_SUBTREE,
         )
+        # geonode.contrib.ldap configuration
+        GEONODE_LDAP_GROUP_NAME_ATTRIBUTE = require_env("LDAP_GROUP_NAME_ATTRIBUTE")
+        GEONODE_LDAP_GROUP_PROFILE_FILTERSTR = require_env("LDAP_GROUP_PROFILE_FILTERSTR")
+        GEONODE_LDAP_GROUP_PROFILE_MEMBER_ATTR = require_env("LDAP_GROUP_PROFILE_MEMBER_ATTR")
 
         AUTH_LDAP_GROUP_TYPE = GeonodeNestedGroupOfNamesType()
+        AUTH_LDAP_GROUP_TYPE.member_attr = GEONODE_LDAP_GROUP_PROFILE_MEMBER_ATTR
 
         ldap_mirror_groups_except = require_env("LDAP_MIRROR_GROUPS_EXCEPT")
         AUTH_LDAP_MIRROR_GROUPS_EXCEPT = [x.strip() for x in ldap_mirror_groups_except.split(",") if x.strip()]
@@ -251,10 +256,13 @@ if os.getenv("LDAP_ENABLED", "false").lower() == "true":
         auth_ldap_find_group_perms = require_env("LDAP_FIND_GROUP_PERMS")
         AUTH_LDAP_FIND_GROUP_PERMS = auth_ldap_find_group_perms.lower() == "true"
 
-        # geonode.contrib.ldap configuration
-        GEONODE_LDAP_GROUP_NAME_ATTRIBUTE = require_env("LDAP_GROUP_NAME_ATTRIBUTE")
-        GEONODE_LDAP_GROUP_PROFILE_FILTERSTR = require_env("LDAP_GROUP_PROFILE_FILTERSTR")
-        GEONODE_LDAP_GROUP_PROFILE_MEMBER_ATTR = require_env("LDAP_GROUP_PROFILE_MEMBER_ATTR")
+        ldap_user_flags_by_group = require_env("LDAP_USER_FLAGS_BY_GROUP")
+        try:
+            AUTH_LDAP_USER_FLAGS_BY_GROUP = json.loads(ldap_user_flags_by_group)
+        except json.JSONDecodeError:
+            sys.stderr.write("CRITICAL CONFIG ERROR: Environment variable 'LDAP_USER_FLAGS_BY_GROUP' is not valid JSON!\n")
+            sys.exit(1)
+
     else:
         print("LDAP group features NOT activated")
         AUTH_LDAP_MIRROR_GROUPS_EXCEPT = []
