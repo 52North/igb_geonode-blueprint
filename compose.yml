@@ -95,7 +95,7 @@ services:
         # files are expected to exist within the context
       - ${CERT_PATH_CHAIN:-./docker/nginx/cert.pem}:/geonode-certificates/autoissued/fullchain.pem
       - ${CERT_PATH_KEY:-./docker/nginx/key.pem}:/geonode-certificates/autoissued/privkey.pem
-    restart: always
+    restart: unless-stopped
     healthcheck:
       test: >
         curl --fail --silent --write-out 'HTTP CODE : %{http_code}\n' --output /dev/null http://127.0.0.1:80/nginx-health
