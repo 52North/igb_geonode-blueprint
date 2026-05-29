@@ -219,7 +219,7 @@ if os.getenv("LDAP_ENABLED", "false").lower() == "true":
     try:
         AUTH_LDAP_USER_ATTR_MAP = json.loads(ldap_user_attr_map_json)
     except json.JSONDecodeError:
-        sys.stderr.write(f"CRITICAL CONFIG ERROR: Environment variable 'LDAP_USER_ATTR_MAP_JSON' is not valid JSON!\n")
+        sys.stderr.write("CRITICAL CONFIG ERROR: Environment variable 'LDAP_USER_ATTR_MAP_JSON' is not valid JSON!\n")
         sys.exit(1)
 
     ldap_always_update_user = require_env("LDAP_ALWAYS_UPDATE_USER")
@@ -228,7 +228,7 @@ if os.getenv("LDAP_ENABLED", "false").lower() == "true":
     try:
         AUTH_LDAP_CACHE_TIMEOUT = int(os.getenv("LDAP_CACHE_TIMEOUT", "3600"))
     except ValueError:
-        sys.stderr.write(f"CRITICAL CONFIG ERROR: Environment variable 'LDAP_CACHE_TIMEOUT' is not valid integer!\n")
+        sys.stderr.write("CRITICAL CONFIG ERROR: Environment variable 'LDAP_CACHE_TIMEOUT' is not valid integer!\n")
         sys.exit(1)
 
     auth_ldap_mirror_groups = require_env("LDAP_MIRROR_GROUPS")
